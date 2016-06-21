@@ -37,19 +37,12 @@ El carácter "#" en este programa representa _paredes_ y rocas, y el carácter "
 
 Una matriz unidimensional puede ser usada para crear un objeto _mundo_. Tal objeto mantiene seguimiento del tamaño y contenido del mundo tiene un método de "toString", que convierte al mundo nuevamente en una cadena imprimible (parecida al programa en el que se basó) de manera que podamos ver qué es lo que está pasando dentro. El objeto mundo también tiene un método de `vuelta`, el cual permite a todos los bichos en él tomar un turno y actualizar el mundo a reflejo de sus acciones.  
 
-### Representing space
+### Representando el espacio.
 
-(((array,as grid)))(((Vector type)))(((coordinates)))The ((grid))
-that models the world has a fixed width and height. Squares are
-identified by their x- and y-coordinates. We use a simple type,
-`Vector` (as seen in the exercises for the
-link:06_object.html#exercise_vector[previous chapter]), to represent
-these coordinate pairs.
+La _cuadrícula_ que modela el mundo tiene un ancho y altura fija. Los cuadros son identificados por sus coordenadas "X" y "Y". Usamos un tipo sencillo, `Vector` (como los vistos en los ejercicios del capítulo anterior), para representar estas coordenadas en pares.
 
-// include_code
 
-[source,javascript]
-----
+```
 function Vector(x, y) {
   this.x = x;
   this.y = y;
@@ -57,10 +50,9 @@ function Vector(x, y) {
 Vector.prototype.plus = function(other) {
   return new Vector(this.x + other.x, this.y + other.y);
 };
-----
+```
 
-(((object)))(((encapsulation)))Next, we need an object type that
-models the grid itself. A grid is part of a world, but we are making
+Next, we need an object type that models the grid itself. A grid is part of a world, but we are making
 it a separate object (which will be a property of a ((world)) object)
 to keep the world object itself simple. The world should concern
 itself with world-related things, and the grid should concern itself with grid-related things.
