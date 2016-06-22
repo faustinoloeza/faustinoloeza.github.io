@@ -110,15 +110,7 @@ console.log(grid.get(new Vector(1, 1)));
 
 Para poder comenzar en el `constructor` del _mundo_, tenemos que ser más específicos acerca de los objetos `bichos` que van a vivir en su interior. He mencionado que el mundo va a pedir a los bichos acciones que quieren tomar. Esto funciona de la siguiente manera: cada objeto bicho tiene un método `acto` que, cuando se le llama, devuelve una acción. Una acción es un objeto con una propiedad `tipo`, que da nombre al tipo de acción que la criatura quiere tomar, por ejemplo, `"movimiento"`. La acción también puede contener información adicional, como la dirección de la criatura quiere mudarse.
 
-Critters are terribly myopic and can see only the
-squares directly around them on the grid. But even this limited vision
-can be useful when deciding which action to take. When the `act`
-method is called, it is given a _view_ object that allows the critter
-to inspect its surroundings. We name the eight surrounding squares by
-their ((compass direction))s: `"n"` for north, `"ne"` for northeast,
-and so on. Here's the object we will use to map from direction names
-to coordinate offsets:
-
+Las criaturas son terriblemente miopes y sólo pueden ver los cuadros directamente alrededor de ellos en la cuadricula. Pero incluso esta visión limitada puede ser útil para decidir qué acción tomar. Cuando se llama al método `acto`, se le da una objeto _vista_ que permite que la criatura pueda inspeccionar su entorno. Nombramos las ocho plazas que la rodean por sus direcciones de la brújula: `"n"` para el norte, "ne" para el noreste, y así sucesivamente. Aquí está el objeto que utilizaremos para mapear nombres de dirección para coordinar los desplazamientos:
 
 
 ```
@@ -134,19 +126,10 @@ var directions = {
 };
 ```
 
-The view object has a method `look`, which takes a
-direction and returns a character, for example `"#"` when there is a
-wall in that direction, or `" "` (space) when there is nothing there.
-The object also provides the convenient methods `find` and `findAll`.
-Both take a map character as an argument. The first returns a direction
-in which the character can be found next to the critter or returns `null` if
-no such direction exists. The second returns an array containing all
-directions with that character. For example, a creature sitting left
-(west) of a wall will get `["ne", "e", "se"]` when calling `findAll`
-on its view object with the `"#"` character as argument.
+El objeto _vista_ tiene método 'look', que toma una dirección y devuelve un caracter, por ejemplo "#" cuando hay una pared en esa dirección, o "" (espacio) cuando no hay nada allí. El objeto también proporciona los métodos convenientes `find` y `findAll`. Ambos toman un mapa de caracteres como argumento. La primera devuelve una dirección del caracter que se encuentra junto a la criatura o devuelve null si no existe tal dirección. El segundo devuelve una matriz que contiene todas las direcciones con ese carácter. Por ejemplo, una criatura sentada a la izquierda (oeste) de una pared conseguirá `[ "ne", "e", "sí"]` al llamar `findAll` sobre el objeto _vista_ con el caracter `"#"` como argumento.
 
-sHere is a simple, stupid critter that just follows its nose until it hits an
-obstacle and then bounces off in a random open direction:
+
+Aquí es un simple bicho, estúpida que se limita a seguir la nariz hasta que choca con un obstáculo y luego rebota en una dirección abierta al azar:
 
 
 ```
@@ -167,16 +150,10 @@ BouncingCritter.prototype.act = function(view) {
 };
 ```
 
-The `randomElement` helper function simply picks a random element from an array, using
-`Math.random` plus some arithmetic to get a random index. We'll use
-this again later because randomness can be useful in ((simulation))s.
+La función auxiliar randomElement simplemente recoge un elemento aleatorio de una matriz, utilizando Math.random más algo de aritmética para obtener un índice al azar. Vamos a utilizar esto de nuevo más tarde por que la aleatoriedad puede ser útil en _simulacione_s.  
 
-To pick a random direction, the `BouncingCritter` constructor calls `randomElement` on an array of direction names. We could also have used `Object.keys` to get this
-array from the `directions` object we defined
-link:07_elife.html#directions[earlier], but that provides no
-guarantees about the order in which the properties are listed. In most
-situations, modern JavaScript engines will return properties in the
-order they were defined, but they are not required to.
+Para recoger una dirección aleatoria, el constructor `BouncingCritter` llama randomElement sobre una matriz de nombres de direcciones. También podríamos haber utilizado `Object.keys` para obtener esta matriz de el objeto `directions` que definimos anteriormente, pero que no proporciona garantías sobre el orden en que las propiedades se enumeran. En la mayoría de las situaciones, los motores de JavaScript modernos devolverán propiedades en el orden en que fueron definidos, pero no estan obligados.
+
 
 The “++|| "s"++” in the `act` method is there to prevent `this.direction` from getting the value `null` if the
 critter is somehow trapped with no empty space around it (for example
