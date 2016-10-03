@@ -154,20 +154,11 @@ La función auxiliar randomElement simplemente recoge un elemento aleatorio de u
 
 Para recoger una dirección aleatoria, el constructor `BouncingCritter` llama randomElement sobre una matriz de nombres de direcciones. También podríamos haber utilizado `Object.keys` para obtener esta matriz de el objeto `directions` que definimos anteriormente, pero que no proporciona garantías sobre el orden en que las propiedades se enumeran. En la mayoría de las situaciones, los motores de JavaScript modernos devolverán propiedades en el orden en que fueron definidos, pero no estan obligados.
 
+The “_|| "s"_” en el metodo `act` está ahí para evitar que `this.direction` obtenga el valor `null` si la criatura de alguna manera es atrapada sin espacios vacios asu alrededor(por ejemplo, cuando están guardados en una esquina junto a otras critaturas).
 
-The “++|| "s"++” in the `act` method is there to prevent `this.direction` from getting the value `null` if the
-critter is somehow trapped with no empty space around it (for example
-when crowded into a corner by other critters).
+### El objeto mundo  
 
-== The world object ==
-
-Now we can start on the `World` object type. The ((constructor)) takes a plan (the array of strings representing the world's grid, described
-link:07_elife.html#grid[earlier]) and a _((legend))_ as arguments. A
-legend is an object that tells us what each character in the map
-means. It contains a constructor for every character—except for the
-space character, which always refers to `null`, the value we'll use to
-represent empty space.
-
+Ahora podemoas empezar con el objeto de tipo `World`. El constructor toma un plan (la matriz de cadenas que representan la cuadrícula del mundo, se ha descrito anteriormente) y una leyenda como argumentos. Una leyenda es un objeto que nos dice lo que significa cada carácter en el mapa. Contiene un constructor para cada carácter, excepto por el carácter de espacio, que siempre se refiere a null, el valor vamos a utilizar para representar el espacio vacío.
 
 ```
 function elementFromChar(legend, ch) {
@@ -254,7 +245,7 @@ console.log(world.toString());
 //   ############################
 ```
 
-== this and its scope ==
+### this and its scope
 
 The `World` ((constructor)) contains a
 call to `forEach`. One interesting thing to note is that inside the
@@ -338,7 +329,7 @@ Grid.prototype.forEach = function(f, context) {
 };
 ```
 
-== Animating life ==
+### Animating life
 
 The next step is to write a `turn` method for the world object that gives the
 ((critter))s a chance to act. It will go over the grid using the
@@ -461,7 +452,7 @@ there. For coordinates outside the grid, `look` simply pretends that
 there is a wall there so that if you define a world that isn't walled
 in, the critters still won't be tempted to try to walk off the edges.
 
-== It moves ==
+### It moves
 
 We instantiated a world object earlier. Now that we've added all the necessary methods, it
 should be possible to actually make the world move.
@@ -515,7 +506,7 @@ book, which discuss JavaScript integration in web browsers, it won't
 look so magical anymore.
 
 
-== More life forms ==
+### More life forms
 
 The dramatic highlight of our world, if you watch for a bit, is when
 two critters bounce off each other. Can you think of another
@@ -594,7 +585,7 @@ animateWorld(new World(
 ```
 
 
-== A more lifelike simulation ==
+### A more lifelike simulation
 
 To make life in our world more interesting, we will add the concepts of ((food)) and
 ((reproduction)). Each living thing in the world gets a new property,
@@ -721,7 +712,7 @@ require a valid (and empty) destination.
 
 If everything is okay, the baby is put onto the grid (it is now no longer hypothetical), and the energy is spent.
 
-== Populating the new world ==
+### Populating the new world
 
 We now have a ((framework)) to simulate these more lifelike creatures. We could put
 the critters from the old world into it, but they would just die
@@ -855,9 +846,9 @@ whole space will fill with plants. If it's the plants, the remaining
 critters starve, and the valley becomes a desolate wasteland. Ah, the
 cruelty of nature.
 
-== Exercises ==
+#### Exercises
 
-=== Artificial stupidity ===
+###Artificial stupidity
 
 Having the inhabitants of our world go extinct after a few minutes is kind of depressing. To deal with this, we could try to create a smarter plant eater.
 
@@ -925,7 +916,7 @@ very stable ecosystem. But no one wants to watch that.
 
 !!hint!!
 
-=== Predators ===
+### Predators
 
 Any serious ((ecosystem)) has a food chain longer than a single link. Write
 another ((critter)) that survives by eating the ((herbivore)) critter.

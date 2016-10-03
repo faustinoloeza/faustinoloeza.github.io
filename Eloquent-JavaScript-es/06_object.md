@@ -481,7 +481,7 @@ console.log(dibujarTabla(filas));
 
 ¡Esto funciona! Pero como todas las celda tienen la misma anchura, el código de diseñar tabla no hace algo realmente interesante.
 
-La fuente de datos de la tabla de las montañas que estamos tratando de generar esta disponible en la variable `MOUNTAINS` en el ((sandbox)) y además es http://eloquentjavascript.net/code/mountains.js[descargable] y desde la web (!book (http://eloquentjavascript.net/code#6[_eloquentjavascript.net/code#6_])!).
+La fuente de datos de la tabla de las montañas que estamos tratando de generar esta disponible en la variable `MOUNTAINS` en el _sandbox_ y además en http://eloquentjavascript.net/code/mountains.js[descargable] y desde la web (!book (http://eloquentjavascript.net/code#6[_eloquentjavascript.net/code#6_])!).
 
 Queremos destacar la fila de arriba, que contiene los nombres de las columnas, subrayando las celdas con una serie de caracteres guión. No hay problema-simplemente escribiremos un tipo de celda que soporte subrayado.
 
@@ -542,7 +542,7 @@ La tabla resultante parece la del ejemplo mostrado antes, excepto por que on tie
 
 ### Getters y setters 
 
-Cuando especificamos una interfaz, es posible incluir propiedades que no son métodos. Podemos tener definida `minAltura` y `minAnchura` para simplemente almacenar números. Pero esto podría requerir que lo calculáramos en él ((constructor)), esto añade código en el que no es estrictamente relevante para _construir_ el objeto.
+Cuando especificamos una interfaz, es posible incluir propiedades que no son métodos. Podemos tener definida `minAltura` y `minAnchura` para simplemente almacenar números. Pero esto podría requerir que lo calculáramos en él _constructor_, esto añade código en el que no es estrictamente relevante para _construir_ el objeto.
 Esto podría causar problemas si, por ejemplo, el interior de una celda subrayada cambia, en este punto el tamaño del subrayado de la celda debería cambiar también.
 
 Esto ha servido como excusa para adoptar el principio de no incluir nunca propiedades que no sean métodos en las interfaces. Más que un acceso directo a un propiedad de valor simple, se pueden usar los métodos `getAlgo` y `setAlgo` para leer y escribir la propiedad. Esta aproximación tiene el inconveniente de que tu tienes que escribir -y leer- un montón de métodos adicionales.
@@ -639,7 +639,7 @@ console.log(dibujarTabla(datosTabla(MOUNTAINS)));
 
 La herencia es una parte fundamental de la tradición de la orientación a objetos, junto con la encapsulación y el polimorfismo. Pero mientras las dos últimas son generalmente consideradas como ideas geniales, la herencia es algo controvertido.
 
-La principal razón para esto es que a menudo es confundida con el _polimorfismo_, vendido como una herramienta más poderosa de lo que en realidad es, y posteriormente sobre utilizado de todas las malas formas posibles. Mientras que la _encapsulación_ y el polimorfismo pueden ser usados para _separar_ trozos de código de otros, reduciendo el enmarañado general del programa, la ((herencia)) fundamentalmente empata con ambos, creando _más_ enmarañado.
+La principal razón para esto es que a menudo es confundida con el _polimorfismo_, vendido como una herramienta más poderosa de lo que en realidad es, y posteriormente sobre utilizado de todas las malas formas posibles. Mientras que la _encapsulación_ y el polimorfismo pueden ser usados para _separar_ trozos de código de otros, reduciendo el enmarañado general del programa, la _herencia_ fundamentalmente empata con ambos, creando _más_ enmarañado.
 
 Puedes tener polimorfismo sin herencia, como hemos visto. No te voy a decir que evites la herencia por completo-Yo la uso regularmente en mis programas.
 Pero tu debes verla como un truco un poco sucio que te puede ayudar a definir nuevos tipos con poco código, no como un gran principio de organización de código. Una forma mejor de extender tipos es a través de _composición_, como `CeldaSubrayada` genera otro objeto celda simplemente guardándolo en una propiedad y remitiendo las llamadas a los métodos a sus propios _métodos_s.
