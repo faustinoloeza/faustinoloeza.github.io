@@ -13,7 +13,7 @@ Sabemos que la escritura de software de calidad es difícil y complejo: No es s�
 - Independiente de cualquier agente externo.
 
 
-![](img/cleanDiagrama.png)
+![](http://faustinoloeza.github.io/img/cleanDiagrama.png)
 
 No es imprescindible utilizar sólo 4 círculos (como se puede ver en la imagen), ya que son únicamente esquemáticos, pero se debe tener en cuenta la regla de dependencia: Las dependencias de código fuente sólo pueden apuntar hacia adentro y nada en un círculo interior pueden saber nada en absoluto acerca de algo en un círculo exterior.
 
@@ -34,7 +34,7 @@ Voy a comenzar con un escenario simple para que funcione: basta con crear una pe
 
 El objetivo es la separación de las preocupaciones manteniendo las reglas de negocio sin saber nada en absoluto sobre el mundo exterior, por lo tanto, se pueden probar sin ningún tipo de dependencia a cualquier elemento externo. Para lograr esto, mi propuesta _se trata de romper el proyecto en 3 capas diferentes_, en los que cada una tiene su propio propósito y funciona separada de las demás. Vale la pena mencionar que cada capa utiliza su propio modelo de datos por lo que esta independencia puede ser alcanzada (verá en el código que se necesita un asignador de datos con el fin de lograr la transformación de datos, un precio a pagar si no quiere cruzar la Utilización de su modelos en toda la aplicación).  He aquí un esquema para que pueda ver cómo se ve así:
 
-![](img/PDD.png)
+![](http://faustinoloeza.github.io/img/PDD.png)
 
 NOTA: Yo no utilizo ninguna librería externa (excepto GSON para parsear los datos JSON y junit, Mockito, robolectric y espresso para las pruebas). La razón era porque hace un poco más claro el ejemplo. De todos modos, no dude en añadir ORMs para el almacenamiento de datos en disco o cualquier framework de inyección de dependencias o cualquier herramienta o biblioteca con la que estes familiarizado, que podría hacer tu vida más fácil. (Recuerde que reinventar la rueda no es una buena práctica). 
 
@@ -42,7 +42,7 @@ NOTA: Yo no utilizo ninguna librería externa (excepto GSON para parsear los dat
 
 Es aquí, donde la lógica relacionada con las vistas y las animaciones suceden. Esto no usa más que un Modelo Vista Presentación (MVP de ahora en adelante), pero tú puedes usar cualquier otro patrón como MVC o MVVM.  No entraré en detalles sobre esto, pero aquí los fragmentos y las actividades son solo vistas, no hay lógica dentro de ellos más que lógica de interfaz de usuario, y esto es donde se realizan todas las cosas de renderizado. Los presentadores de esta capa se componen con interactores(casos de uso) que realizan el trabajo en un nuevo hilo fuera del hilo de interfaz de usuario de Android, y regresan usando un callback con los datos que se representaran en la vista. 
 
-![](img/clean_architecture_mvp.png)
+![](http://faustinoloeza.github.io/img/clean_architecture_mvp.png)
 
 Si quieres un ejemplo bueno de eficaz interfaz de usuario de Android que utiliza MVP y MVVM, echa un vistazo a lo que mi amigo Pedro Gómez ha hecho.
 
@@ -51,7 +51,7 @@ Si quieres un ejemplo bueno de eficaz interfaz de usuario de Android que utiliza
 Las reglas de negocio van aquí: Toda la lógica de negocio sucede en esta capa. Con respecto al proyecto android, podrás ver todos los interactores (casos de uso) implementados aquí también.   Esta capa es un módulo de Java puro sin ninguna dependencia Android.   Todos los componentes externos usan interfaces cuando se conectan a los objetos de negocio.
 
 
-![](img/clean_architecture_domain.png)
+![](http://faustinoloeza.github.io/img/clean_architecture_domain.png)
 
 NOTA: Un caso de uso es una descripción de los pasos o las actividades que deberán realizarse para llevar a cabo algún proceso. Los personajes o entidades que participarán en un caso de uso se denominan actores. En el contexto de ingeniería del software, un caso de uso es una secuencia de interacciones que se desarrollarán entre un sistema y sus actores en respuesta a un evento que inicia un actor principal sobre el propio sistema.
 
@@ -59,7 +59,7 @@ NOTA: Un caso de uso es una descripción de los pasos o las actividades que debe
 
 Todos los datos necesarios para la aplicación vienen de esta capa a través de una implementación UserRepository (la interfaz está en la capa de dominio) que utiliza un patrón de repositorio con una estrategia que, a través de una fábrica, recoge diferentes fuentes de datos en función de ciertas condiciones. Por ejemplo, cuando traemos un usuario por id, se seleccionará la fuente de datos de caché de disco si el usuario ya existe en la memoria caché, de lo contrario se consultará la nube para recuperar los datos y luego guardarlo en la memoria caché de disco. La idea detrás de todo esto es que el origen de datos es transparente para el cliente, no le importa si los datos proviene de memoria, disco o la nube, la única verdad es que los datos llegarán y serán conseguidos.
 
-![](img/clean_architecture_data.png)
+![](http://faustinoloeza.github.io/img/clean_architecture_data.png)
 
 NOTA: En términos de código he puesto en práctica una manera muy sencilla y primitiva de cache de disco utilizando el sistema de archivos y preferencias android, que fue para el propósito de aprendizaje. Recuerda una vez más que no se debe reinventar la rueda si hay librerías existentes que realizan estas tareas de una mejor manera. 
 
