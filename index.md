@@ -22,5 +22,5 @@
 
 #### MVP + Clean + Repository ejemplo de google
 
-#### [Architecting Android por Fernando Cejas](Fernando_Cejas.html)
+#### [Architecting Android por Fernando Cejas](http://faustinoloeza.github.io/Fernando_Cejas.html)
 ##### [Articulo Original](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
