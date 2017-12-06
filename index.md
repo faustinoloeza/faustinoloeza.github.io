@@ -15,7 +15,7 @@
 ![](Eloquent-JavaScript-es/img/cover.jpg)
 
 
-
+## Faustino Loeza 
 ## Android Arquitecture
 
 #### MVP + Repository ejemplo de google
