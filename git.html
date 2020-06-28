@@ -1,0 +1,102 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="github-markdown.css">
+<style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
+<article class="markdown-body">
+	<h1>Unicorns</h1>
+	<p>All the things</p>
+
+
+
+<div class="highlight highlight-source-js">
+	<pre><code>function getPage(file, id) {
+    var request = new XMLHttpRequest();
+    request.open('GET', file, true);
+
+    request.onload = function() {
+        if (this.status >= 200 && this.status < 400) {
+            // Success!
+            var resp = this.response;
+            var elem = document.getElementById(id);
+            elem.innerHTML = resp
+        } else {
+            // We reached our target server, but it returned an error
+
+        }
+    };
+
+    request.onerror = function() {
+        // There was a connection error of some sort
+    };
+
+    request.send();
+}
+</code>
+	</pre>
+
+
+
+</div>
+	<a href="https://www.youtube.com/watch?v=K52SNsUJu8A" target="_blank"><img src="https://i.ytimg.com/an_webp/K52SNsUJu8A/mqdefault_6s.webp?du=3000&sqp=CKD43_cF&rs=AOn4CLDq2I_unlSZD-KqjrLcdZt2YPcYog"
+alt="IMAGE ALT TEXT HERE" width="600" height="480" border="10" /></a>
+
+
+
+
+<p>Colons can be used to align columns.</p>
+
+<table><thead>
+<tr>
+<th>Tables</th>
+<th align="center">Are</th>
+<th align="right">Cool</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>col 3 is</td>
+<td align="center">right-aligned</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td align="center">centered</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right"></td>
+</tr>
+</tbody></table>
+
+<h2>Misión</h2>
+Formar profesionales del más alto nivel y en diversas áreas del conocimiento; éticos y con un sólido compromiso social hacia su comunidad; competitivos nacional e internacionalmente; con espíritu emprendedor y los conocimientos para que respondan a los avances de la ciencia y la tecnología, así como a las necesidades de desarrollo económico, político, social y cultural del país.
+
+<h2>Visión</h2>
+Ser la institución líder de educación superior a distancia en los países de habla hispana, con un modelo educativo flexible e innovador y un amplio reconocimiento social, que promueva la preservación del medio ambiente, la generación de conocimiento y el desarrollo científico y tecnológico.
+
+<h2>Objetivo general</h2>
+Ampliar las oportunidades y atender la demanda de educación superior en todo el país, bajo criterios y estándares de calidad e innovación permanentes, con especial atención a las regiones y grupos que por diversas razones no tienen acceso a servicios educativos escolarizados.
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Media Object Flexbox" src="https://codepen.io/faustinoloeza/embed/QEBGOj?height=265&theme-id=light&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/faustinoloeza/pen/QEBGOj'>Media Object Flexbox</a> by Faustino Loeza
+  (<a href='https://codepen.io/faustinoloeza'>@faustinoloeza</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+</article>
+
+
+
