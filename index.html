@@ -50,7 +50,7 @@
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a style="cursor: pointer;"  class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="getMenu();">
+      <a href="menu.html"  class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="getMenu();">
         Flutter
       </a>
       <a style="cursor: pointer;" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="getLogin();" >
@@ -63,6 +63,16 @@
       <a style="cursor: pointer;" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="git();" >
         GIT
       </a>
+        <a style="cursor: pointer;" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="digramas();" >
+        DIAGRAMAS
+      </a>
+              <a href="dinamico.html" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="digramas();" >
+        DINAMICO
+      </a>
+
+                    <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" onclick="nuse();" >
+        DINAMICO
+      </a>
     </div>
     <div>
       <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Download</a>
@@ -73,9 +83,29 @@
 <div id="main">
 	
 </div>
+<div id="main2">
+  
+</div>
 <body>
 
 <script type="text/javascript">
+  function nuse(){
+  getPage("nuse.html", "main");
+}
+
+    function digramas(){
+      //var t = 
+      var t = function(){
+        
+        loadScript('f406bd055db50f8b225197b05684c84c', 'cats');
+        console.log("HOLA")
+        loadScript('7aed1a6f403c442d33bc1e9bff288e5e', 'dogs');
+      }
+  getPage2("diagramas.html", "main", t);
+
+  //setTimeout(function(){ loadScript('7aed1a6f403c442d33bc1e9bff288e5e'); }, 1000);
+
+}
   function git(){
   getPage("git.html", "main");
 }
@@ -88,16 +118,21 @@ function getLogin(){
 function codesanbox(){
   getPage("codesanbox.html", "main");
 }
-	function getPage(file, id){
+	function getPage2(file, id, myfunction){
 		var request = new XMLHttpRequest();
 		request.open('GET', file, true);
 
 		request.onload = function() {
-			if (this.status >= 200 && this.status < 400) {
+    if (this.status >= 200 && this.status < 400) {
     // Success!
     var resp = this.response;
     var elem = document.getElementById(id);
-    elem.innerHTML = resp
+    elem.innerHTML = resp;
+    myfunction();
+    
+
+
+
 } else {
     // We reached our target server, but it returned an error
 
@@ -111,7 +146,181 @@ request.onerror = function() {
 request.send();
 }
 
+  function getPage(file, id){
+    var request = new XMLHttpRequest();
+    request.open('GET', file, true);
 
+    request.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+    // Success!
+    var resp = this.response;
+    var elem = document.getElementById(id);
+    elem.innerHTML = resp;
+
+
+} else {
+    // We reached our target server, but it returned an error
+
+}
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+
+request.send();
+}
+
+ function makeDiagramas(){
+    var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+ }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript">
+
+  
+
+  function adjustIframeSize(newHeight) {
+
+
+    if(newHeight == 387){
+
+      var i = document.getElementById("catsframe");
+      i.style.height = parseInt(newHeight+10) + "px";
+      console.log("size adjusted", newHeight); 
+    }else{
+
+
+
+
+    var i = document.getElementById("dogsframe");
+    i.style.height = parseInt(newHeight+10) + "px";
+    console.log("size adjusted", newHeight);
+    }
+
+  }
+
+
+  function loadScript(gitID, divID){
+    var iframeDiv = divID+'frame';
+
+    localStorage.setItem('iframeDiv', iframeDiv);
+
+    var gistFrame = document.createElement("iframe");
+      gistFrame.setAttribute("width", "100%");
+      gistFrame.id = iframeDiv;
+      
+      var zone = document.getElementById(divID);
+      zone.innerHTML = "";
+      zone.appendChild(gistFrame);
+      
+      // Create the iframe's document
+      var gistFrameHTML = '<html><body onload="parent.adjustIframeSize(document.body.scrollHeight)"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + gitID + '.js"></sc'+'ript></body></html>';
+
+
+
+      console.log(gistFrameHTML);
+
+      // Set iframe's document with a trigger for this document to adjust the height
+      //var gistFrameDoc = gistFrame.document;
+      
+      if (gistFrame.contentDocument) {
+        gistFrame.document = gistFrame.contentDocument;
+      } else if (gistFrame.contentWindow) {
+        gistFrame.document = gistFrame.contentWindow.document;
+      }
+      
+      gistFrame.document.open();
+      gistFrame.document.writeln(gistFrameHTML);
+      gistFrame.document.close();   
+  }
+
+
+function ajustarFrame(newHeight){
+    var i = document.getElementById("iframeDiv");
+    i.style.height = parseInt(newHeight+10) + "px";
+    console.log("size adjusted", newHeight); 
+}
+
+
+  function getMisDatos(){
+
+    var gistFrame = document.createElement("iframe");
+    gistFrame.setAttribute("width", "100%");
+    gistFrame.setAttribute("height", "100%");
+    gistFrame.id = 'iframeDiv';
+
+    var zone = document.getElementById("main");
+    zone.innerHTML = "";
+    zone.appendChild(gistFrame);
+
+    var gistFrameHTML = '<html><body onload="parent.ajustarFrame(document.body.scrollHeight)"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc'+'ript></body></html>';
+
+      if (gistFrame.contentDocument) {
+        gistFrame.document = gistFrame.contentDocument;
+      } else if (gistFrame.contentWindow) {
+        gistFrame.document = gistFrame.contentWindow.document;
+      }
+      gistFrame.document.open();
+      gistFrame.document.writeln(gistFrameHTML);
+      gistFrame.document.close();   
+   }
+
+
+      function ajustarFrame2(newHeight, div){
+        console.log(div);
+    var i = document.getElementById("iframeDiv2");
+    i.style.height = parseInt(newHeight+10) + "px";
+    console.log("size adjusted", newHeight); 
+}
+
+var ssss = 89;
+
+     function getMisDatos2(){
+
+
+      var id = 'ssss';
+
+    var gistFrame = document.createElement("iframe");
+    gistFrame.setAttribute("width", "100%");
+    gistFrame.setAttribute("height", "100%");
+    gistFrame.id = 'iframeDiv2';
+
+    var zone = document.getElementById("main2");
+    zone.innerHTML = "";
+    zone.appendChild(gistFrame);
+
+    var gistFrameHTML = '<html><body onload="parent.ajustarFrame2(document.body.scrollHeight )"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc'+'ript></body></html>';
+
+    console.log(gistFrameHTML);
+      if (gistFrame.contentDocument) {
+        gistFrame.document = gistFrame.contentDocument;
+      } else if (gistFrame.contentWindow) {
+        gistFrame.document = gistFrame.contentWindow.document;
+      }
+      gistFrame.document.open();
+      gistFrame.document.writeln(gistFrameHTML);
+      gistFrame.document.close();   
+   }
 </script>
 </body>
 </html>
