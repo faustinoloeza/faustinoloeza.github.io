@@ -86,6 +86,8 @@
 <div id="main2">
   
 </div>
+<iframe id="kilo" style="width: 100%;" scrolling="no"></iframe>
+<script src="https://gist.github.com/faustinoloeza/7aed1a6f403c442d33bc1e9bff288e5e.js"></script>
 <body>
 
 <script type="text/javascript">
@@ -295,7 +297,7 @@ function ajustarFrame(newHeight){
 
 var ssss = 89;
 
-     function getMisDatos2(){
+     function getMisDatos2(divID){
 
 
       var id = 'ssss';
@@ -305,7 +307,7 @@ var ssss = 89;
     gistFrame.setAttribute("height", "100%");
     gistFrame.id = 'iframeDiv2';
 
-    var zone = document.getElementById("main2");
+    var zone = document.getElementById(divID);
     zone.innerHTML = "";
     zone.appendChild(gistFrame);
 
@@ -321,6 +323,35 @@ var ssss = 89;
       gistFrame.document.writeln(gistFrameHTML);
       gistFrame.document.close();   
    }
+
+
+   function newTest(){
+     var html_string = '<html><body><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc'+'ript></body></html>';
+    document.getElementById('kilo').src = "data:text/html;charset=utf-8," + escape(html_string);
+   }
+
+
+   function replaceIframeContent()
+{
+
+    var iframeElement = document.getElementById("kilo");
+    iframeElement.src = "about:blank";
+    iframeElement.contentWindow.document.open();
+    iframeElement.contentWindow.document.write(newHTML);
+    iframeElement.contentWindow.document.close();
+}
+
+function test(){
+          fetch('https://api.github.com/repos/agalea91/crypto-monetary-base/contents/charts/relative_coin_supply_pct_estimates.html')
+            .then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                iframe = document.getElementById('github-iframe');
+                iframe.src = 'data:text/html;base64,' + encodeURIComponent(data['content']);
+            });
+}
+
+
 </script>
 </body>
 </html>
