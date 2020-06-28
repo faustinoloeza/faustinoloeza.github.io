@@ -40,24 +40,24 @@
 <body>
 
 <script type="text/javascript">
-function getDesvios(){
-	console.log("=D0");
-}
+	function getDesvios(){
+		console.log("=D0");
+	}
 
-function getPage(){
-	var request = new XMLHttpRequest();
-request.open('GET', 'menu.html', true);
+	function getPage(){
+		var request = new XMLHttpRequest();
+		request.open('GET', 'menu.html', true);
 
-request.onload = function() {
-  if (this.status >= 200 && this.status < 400) {
+		request.onload = function() {
+			if (this.status >= 200 && this.status < 400) {
     // Success!
     var resp = this.response;
     var elem = document.getElementById('main');
-    elem.innerHTML = response;
-  } else {
+    elem.innerHTML = '<object type="text/html" data='+resp+' ></object>';
+} else {
     // We reached our target server, but it returned an error
 
-  }
+}
 };
 
 request.onerror = function() {
