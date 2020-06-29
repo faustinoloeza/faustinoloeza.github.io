@@ -35,6 +35,11 @@
   order: 1;
   margin: 0 0 0 1em;
 }
+
+.miperfil{
+  width: 32px;
+  height: 32px;
+}
     </style>
 </head>
 
@@ -80,6 +85,18 @@
   </div>
 </nav>
 
+<div class="container my-12 mx-auto px-4 md:px-12">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4" id="posts">
+
+      
+
+       
+
+    </div>
+</div>
+
+
+
 <div id="main">
 	
 </div>
@@ -87,7 +104,13 @@
   
 </div>
 <iframe id="kilo" style="width: 100%;" scrolling="no"></iframe>
-<script src="https://gist.github.com/faustinoloeza/7aed1a6f403c442d33bc1e9bff288e5e.js"></script>
+<div class="flex flex-wrap" id="listingTable">
+  
+</div>
+
+<a href="javascript:prevPage()" id="btn_prev">Prev</a>
+<a href="javascript:nextPage()" id="btn_next">Next</a>
+page: <span id="page"></span>
 <body>
 
 <script type="text/javascript">
@@ -351,6 +374,99 @@ function test(){
             });
 }
 
+
+var current_page = 1;
+var records_per_page = 6;
+
+var objJson = [
+    { adName: "DIAGRAMAS", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "Flutter 2", url: "dinamico.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AWS 3", url: "git.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "JS 4", url: "login.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "SQL 5", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AdName 6", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AdName 7", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AdName 8", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AdName 9", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"},
+    { adName: "AdName 10", url: "diagramas.html" ,contenido: "Fluter es una de los majores tecnologías"}
+]; // Can be obtained from another source, such as your objJson variable
+
+function prevPage()
+{
+    if (current_page > 1) {
+        current_page--;
+        changePage(current_page);
+    }
+}
+
+function nextPage()
+{
+    if (current_page < numPages()) {
+        current_page++;
+        changePage(current_page);
+    }
+}
+    
+function changePage(page)
+{
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var listing_table = document.getElementById("posts");
+    var page_span = document.getElementById("page");
+ 
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > numPages()) page = numPages();
+
+    listing_table.innerHTML = '';
+    var template = '';
+    
+    for (var i = (page-1) * records_per_page; i < (page * records_per_page) && i < objJson.length; i++) {
+      template += makeTemplate(objJson[i].adName, objJson[i].url);
+    }
+    listing_table.innerHTML += template;
+    page_span.innerHTML = page + "/" + numPages();
+
+    if (page == 1) {
+        btn_prev.style.visibility = "hidden";
+    } else {
+        btn_prev.style.visibility = "visible";
+    }
+
+    if (page == numPages()) {
+        btn_next.style.visibility = "hidden";
+    } else {
+        btn_next.style.visibility = "visible";
+    }
+}
+
+function numPages()
+{
+    return Math.ceil(objJson.length / records_per_page);
+}
+
+window.onload = function() {
+    changePage(1);
+};
+
+
+function makeTemplate(Titulo, url){
+
+  var template = '<div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">'
+  //<div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+  template += '<article class="overflow-hidden rounded-lg shadow-lg">';
+  template += '<a href='+ url+'><img alt="Placeholder" class="block h-auto w-full miImagen" src="https://picsum.photos/300/200/?random"></a>';
+  template += '<header class="flex items-center justify-between leading-tight p-2 md:p-4">';
+  template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href='+url+'>'+ Titulo +'</a></h1>';
+  template += '<p class="text-grey-darker text-sm">11/1/19</p></header>';
+  template += '<footer class="flex items-center justify-between leading-none p-2 md:p-4">';
+  template += '<a target="_blank"  class="flex items-center no-underline hover:underline text-black" href="https://github.com/faustinoloeza">'           
+  template += '<img alt="Placeholder" class="block rounded-full miperfil" src="https://avatars0.githubusercontent.com/u/30273245?s=60&v=4">';
+  template += '<p class="ml-2 text-sm">Faustinoloeza</p></a>';
+  template += '<a class="no-underline text-grey-darker hover:text-red-dark" href="#"><span class="hidden">Like</span>AA</a>';
+  template +=  '</footer> </article> </div>';                    
+  return template;
+}
 
 </script>
 </body>
