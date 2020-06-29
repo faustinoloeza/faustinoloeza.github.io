@@ -1,0 +1,42 @@
+<div id="main">
+	
+</div>
+
+<script type="text/javascript">
+	function test(){
+          fetch('https://github.com/faustinoloeza/clean-code-javascript/blob/master/README.md')
+            .then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                iframe = document.getElementById('main');
+                iframe.src = 'data:text/html;base64,' + encodeURIComponent(data['content']);
+            });
+}
+
+
+function getPage(){
+	var id = 'main';
+	var request = new XMLHttpRequest();
+	request.open('GET', 'https://github.com/faustinoloeza/clean-code-javascript/blob/master/README.md', true);
+
+	request.onload = function() {
+		if (this.status >= 200 && this.status < 400) {
+    // Success!
+    var resp = this.response;
+    var elem = document.getElementById(id);
+    elem.innerHTML = resp;
+
+
+	} else {
+	    // We reached our target server, but it returned an error
+
+	}
+	};
+
+	request.onerror = function() {
+	  // There was a connection error of some sort
+	};
+
+	request.send();
+}
+</script>
