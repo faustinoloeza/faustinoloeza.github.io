@@ -14,7 +14,7 @@ var t = {
 			"type": "avanzado",
 			"id": "1",
 			"title": "Introdución a Flutter",
-			"url":"diagramas.html",
+			"url":"post.html",
 			"body": "Uno de los mejores SDK para desarrollo movil",
 			"created": "2015-05-22T14:56:29.000Z",
 			"updated": "2015-05-22T14:56:28.000Z"

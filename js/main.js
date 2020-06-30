@@ -346,7 +346,7 @@ function makeTemplate(Titulo, url) {
 
     var template = '<div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">'
     template += '<article class="overflow-hidden rounded-lg shadow-lg">';
-    template += '<a href=' + url + '><img alt="Placeholder" class="block h-auto w-full miImagen" src="https://picsum.photos/300/200/?random"></a>';
+    template += '<a href=' + url + '><img alt="Placeholder" class="block h-auto w-full miImagen" src="images/prueba.jpg"></a>';
     template += '<header class="flex items-center justify-between leading-tight p-2 md:p-4">';
     template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '>' + Titulo + '</a></h1>';
     template += '</header>';
