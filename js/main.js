@@ -260,57 +260,6 @@ function test() {
 var current_page = 1;
 var records_per_page = 6;
 
-var objJson = [{
-        adName: "DIAGRAMAS",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "Flutter 2",
-        url: "dinamico.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AWS 3",
-        url: "git.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "JS 4",
-        url: "login.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "SQL 5",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AdName 6",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AdName 7",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AdName 8",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AdName 9",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    },
-    {
-        adName: "AdName 10",
-        url: "diagramas.html",
-        contenido: "Fluter es una de los majores tecnologías"
-    }
-]; // Can be obtained from another source, such as your objJson variable
 
 function prevPage() {
     if (current_page > 1) {
@@ -339,8 +288,8 @@ function changePage(page) {
     listing_table.innerHTML = '';
     var template = '';
 
-    for (var i = (page - 1) * records_per_page; i < (page * records_per_page) && i < objJson.length; i++) {
-        template += makeTemplate(objJson[i].adName, objJson[i].url);
+    for (var i = (page - 1) * records_per_page; i < (page * records_per_page) && i < t.data.length; i++) {
+        template += makeTemplate(t.data[i].title, t.data[i].url);
     }
     listing_table.innerHTML += template;
     page_span.innerHTML = page + "/" + numPages();
@@ -359,12 +308,9 @@ function changePage(page) {
 }
 
 function numPages() {
-    return Math.ceil(objJson.length / records_per_page);
+    return Math.ceil(t.data.length / records_per_page);
 }
 
-window.onload = function() {
-    changePage(1);
-};
 
 
 function beginer() {
@@ -399,12 +345,11 @@ function makeTemplate(Titulo, url) {
     var fire3 = '<div onclick=advanced(); class="fire-advanced"> <div class="fire-left"> <div class="main-fire"></div> <div class="particle-fire"></div> </div> <div class="fire-main"> <div class="main-fire"></div> <div class="particle-fire"></div> </div> <div class="fire-right"> <div class="main-fire"></div> <div class="particle-fire"></div> </div> <div class="fire-bottom"> <div class="main-fire"></div> </div></div>';
 
     var template = '<div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">'
-    //<div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
     template += '<article class="overflow-hidden rounded-lg shadow-lg">';
-    template += '<a href=#><img alt="Placeholder" class="block h-auto w-full miImagen" src="https://picsum.photos/300/200/?random"></a>';
+    template += '<a href=' + url + '><img alt="Placeholder" class="block h-auto w-full miImagen" src="https://picsum.photos/300/200/?random"></a>';
     template += '<header class="flex items-center justify-between leading-tight p-2 md:p-4">';
     template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '>' + Titulo + '</a></h1>';
-    template += '<p class="text-grey-darker text-sm">11/1/19</p></header>';
+    template += '</header>';
     template += '<footer class="flex items-center justify-between leading-none p-2 md:p-4">';
     template += '<a target="_blank"  class="flex items-center no-underline hover:underline text-black" href="https://github.com/faustinoloeza">'
     template += '<img alt="Placeholder" class="block rounded-full miperfil" src="https://avatars0.githubusercontent.com/u/30273245?s=60&v=4">';
@@ -459,3 +404,21 @@ function progressbar(){
 
 	});
 }
+
+
+
+const loadJSON = (callback) => {
+    let xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'db.json', true);
+    // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = () => {
+        if (xobj.readyState === 4 && xobj.status === 200) {
+            // Required use of an anonymous callback 
+            // as .open() will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
