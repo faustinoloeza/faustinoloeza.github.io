@@ -31,10 +31,10 @@
                   <div class="flex w-1/2 pl-4 text-sm">
                      <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
                         <li class="mr-2">
-                           <a class="inline-block py-2 px-2 text-white no-underline hover:underline" href="post.html">POST</a>
+                           <a class="inline-block py-2 px-2 text-white no-underline hover:underline" href="javascript:router.navigate('/')">POST</a>
                         </li>
                         <li class="mr-2">
-                           <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:underline py-2 px-2" href="#">LINK</a>
+                           <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:underline py-2 px-2" href="javascript:router.navigate('/cancun')">LINK</a>
                         </li>
                         <li class="mr-2">
                            <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:underline py-2 px-2" href="#">LINK</a>
@@ -153,15 +153,22 @@ page: <span id="page"></span>
             </div>
          </div>
       </footer>
+      <script type="text/javascript" src="js/navigo.min.js"></script>
       <script type="text/javascript" src="db.js"></script>
       <script type="text/javascript" src="js/main.js"></script>
 
       <script type="text/javascript">
-         changePage(1);
+         
 
-         fetch('https://jsonplaceholder.typicode.com/todos/1')
-  .then(response => response.json())
-  .then(json => console.log(json))
+/*            fetch('https://jsonplaceholder.typicode.com/todos/1')
+           .then(response => response.json())
+           .then(json => console.log(json))*/
+
+      document.addEventListener("DOMContentLoaded", function() {
+        changePage(1);
+      });
+
+
       </script>
    </body>
 </html>

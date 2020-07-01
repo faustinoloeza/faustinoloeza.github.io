@@ -1,3 +1,25 @@
+var root = null;
+var useHash = true; // Defaults to: false
+var hash = '#!'; // Defaults to: '#'
+var router = new Navigo(root, useHash, hash);
+
+
+router
+  .on('/', function () {
+  changePage(1);
+  })
+  .resolve();
+
+
+router
+  .on('/cancun', function () {
+    digramas();
+  })
+  .resolve();
+
+
+
+
 function nuse() {
     getPage("nuse.html", "main");
 }
@@ -10,7 +32,7 @@ function digramas() {
         console.log("HOLA")
         loadScript('7aed1a6f403c442d33bc1e9bff288e5e', 'dogs');
     }
-    getPage2("diagramas.html", "main", t);
+    getPage2("diagramas.html", "posts", t);
 
     //setTimeout(function(){ loadScript('7aed1a6f403c442d33bc1e9bff288e5e'); }, 1000);
 
@@ -348,7 +370,7 @@ function makeTemplate(Titulo, url) {
     template += '<article class="overflow-hidden rounded-lg shadow-lg">';
     template += '<a href=' + url + '><img alt="Placeholder" class="block h-auto w-full miImagen" src="images/prueba.jpg"></a>';
     template += '<header class="flex items-center justify-between leading-tight p-2 md:p-4">';
-    template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '>' + Titulo + '</a></h1>';
+    template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '> '+ Titulo + ' </a></h1>';
     template += '</header>';
     template += '<footer class="flex items-center justify-between leading-none p-2 md:p-4">';
     template += '<a target="_blank"  class="flex items-center no-underline hover:underline text-black" href="https://github.com/faustinoloeza">'
