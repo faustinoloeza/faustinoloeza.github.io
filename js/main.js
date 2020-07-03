@@ -4,18 +4,6 @@ var hash = '#!'; // Defaults to: '#'
 var router = new Navigo(root, useHash, hash);
 
 
-router
-  .on('/', function () {
-  changePage(1);
-  })
-  .resolve();
-
-
-router
-  .on('/cancun', function () {
-    digramas();
-  })
-  .resolve();
 
 
 

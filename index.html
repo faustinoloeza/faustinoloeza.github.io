@@ -165,7 +165,19 @@ page: <span id="page"></span>
            .then(json => console.log(json))*/
 
       document.addEventListener("DOMContentLoaded", function() {
-        changePage(1);
+       router
+  .on('/', function () {
+  changePage(1);
+  })
+.resolve();
+
+
+router
+  .on('/cancun', function () {
+    digramas();
+  })
+  .resolve();
+
       });
 
 
