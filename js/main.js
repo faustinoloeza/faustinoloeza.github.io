@@ -6,8 +6,6 @@ var router = new Navigo(root, useHash, hash);
 
 
 
-
-
 function nuse() {
     getPage("nuse.html", "main");
 }
@@ -117,25 +115,25 @@ function makeDiagramas() {
     });
 }
 
-    function adjustIframeSize(newHeight) {
+function adjustIframeSize(newHeight) {
 
 
-        if (newHeight == 387) {
+    if (newHeight == 387) {
 
-            var i = document.getElementById("catsframe");
-            i.style.height = parseInt(newHeight + 10) + "px";
-            console.log("size adjusted", newHeight);
-        } else {
-
-
+        var i = document.getElementById("catsframe");
+        i.style.height = parseInt(newHeight + 10) + "px";
+        console.log("size adjusted", newHeight);
+    } else {
 
 
-            var i = document.getElementById("dogsframe");
-            i.style.height = parseInt(newHeight + 10) + "px";
-            console.log("size adjusted", newHeight);
-        }
 
+
+        var i = document.getElementById("dogsframe");
+        i.style.height = parseInt(newHeight + 10) + "px";
+        console.log("size adjusted", newHeight);
     }
+
+}
 
 
 function loadScript(gitID, divID) {
@@ -358,7 +356,7 @@ function makeTemplate(Titulo, url) {
     template += '<article class="overflow-hidden rounded-lg shadow-lg">';
     template += '<a href=' + url + '><img alt="Placeholder" class="block h-auto w-full miImagen" src="images/prueba.jpg"></a>';
     template += '<header class="flex items-center justify-between leading-tight p-2 md:p-4">';
-    template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '> '+ Titulo + ' </a></h1>';
+    template += '<h1 class="text-lg"><a class="no-underline hover:underline text-black" href=' + url + '> ' + Titulo + ' </a></h1>';
     template += '</header>';
     template += '<footer class="flex items-center justify-between leading-none p-2 md:p-4">';
     template += '<a target="_blank"  class="flex items-center no-underline hover:underline text-black" href="https://github.com/faustinoloeza">'
@@ -375,44 +373,44 @@ function formatDate(date) {
         day = '' + d.getDate(),
         year = d.getFullYear();
 
-    if (month.length < 2) 
+    if (month.length < 2)
         month = '0' + month;
-    if (day.length < 2) 
+    if (day.length < 2)
         day = '0' + day;
 
     return [year, month, day].join('-');
 }
 
-function progressbar(){
-	var h = document.documentElement,
-	b = document.body,
-	st = 'scrollTop',
-	sh = 'scrollHeight',
-	progress = document.querySelector('#progress'),
-	scroll;
-	var scrollpos = window.scrollY;
-	var header = document.getElementById("header");
+function progressbar() {
+    var h = document.documentElement,
+        b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight',
+        progress = document.querySelector('#progress'),
+        scroll;
+    var scrollpos = window.scrollY;
+    var header = document.getElementById("header");
 
-	document.addEventListener('scroll', function() {
+    document.addEventListener('scroll', function() {
 
-		/*Refresh scroll % width*/
-		scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
-		progress.style.setProperty('--scroll', scroll + '%');
+        /*Refresh scroll % width*/
+        scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+        progress.style.setProperty('--scroll', scroll + '%');
 
-		/*Apply classes for slide in bar*/
-		scrollpos = window.scrollY;
+        /*Apply classes for slide in bar*/
+        scrollpos = window.scrollY;
 
-		if (scrollpos > 100) {
-			header.classList.remove("hidden");
-			header.classList.remove("fadeOutUp");
-			header.classList.add("slideInDown");
-		} else {
-			header.classList.remove("slideInDown");
-			header.classList.add("fadeOutUp");
-			header.classList.add("hidden");
-		}
+        if (scrollpos > 100) {
+            header.classList.remove("hidden");
+            header.classList.remove("fadeOutUp");
+            header.classList.add("slideInDown");
+        } else {
+            header.classList.remove("slideInDown");
+            header.classList.add("fadeOutUp");
+            header.classList.add("hidden");
+        }
 
-	});
+    });
 }
 
 
@@ -432,3 +430,111 @@ const loadJSON = (callback) => {
     xobj.send(null);
 }
 
+// get all data in form and return object
+function getFormData(form) {
+    var elements = form.elements;
+    console.log(elements);
+    var honeypot;
+
+    var fields = Object.keys(elements).filter(function(k) {
+        if (elements[k].name === "honeypot") {
+            honeypot = elements[k].value;
+            return false;
+        }
+        return true;
+    }).map(function(k) {
+        if (elements[k].name !== undefined) {
+            return elements[k].name;
+            // special case for Edge's html collection
+        } else if (elements[k].length > 0) {
+            return elements[k].item(0).name;
+        }
+    }).filter(function(item, pos, self) {
+        return self.indexOf(item) == pos && item;
+    });
+
+    var formData = {};
+    fields.forEach(function(name) {
+        var element = elements[name];
+
+        // singular form elements just have one value
+        formData[name] = element.value;
+
+        // when our element has multiple items, get their values
+        if (element.length) {
+            var data = [];
+            for (var i = 0; i < element.length; i++) {
+                var item = element.item(i);
+                if (item.checked || item.selected) {
+                    data.push(item.value);
+                }
+            }
+            formData[name] = data.join(', ');
+        }
+    });
+
+    // add form-specific values into the data
+    formData.formDataNameOrder = JSON.stringify(fields);
+    formData.formGoogleSheetName = form.dataset.sheet || "responses"; // default sheet name
+    formData.formGoogleSendEmail = form.dataset.email || ""; // no email by default
+
+    return {
+        data: formData,
+        honeypot: honeypot
+    };
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault(); // we are submitting via xhr below
+    var form = event.target;
+    var formData = getFormData(form);
+    var data = formData.data;
+
+    console.log(data);
+    // If a honeypot field is filled, assume it was done so by a spam bot.
+    if (formData.honeypot) {
+        return false;
+    }
+
+    //disableAllButtons(form);
+    var url = form.action;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    // xhr.withCredentials = true;
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            form.reset();
+            alert("Mensaje enviado");
+        }
+    };
+    // url encode form data for sending as post data
+    var encoded = Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+    }).join('&');
+
+    xhr.send(encoded);
+}
+
+function loadEventListenerToForm() {
+    var form = document.getElementById('formulario');
+    if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+    } else {
+        form.addEventListener("submit", processForm);
+    }
+}
+
+
+function disableAllButtons(form) {
+    var buttons = form.querySelectorAll("button");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+    }
+}
+
+function processForm(e) {
+    if (e.preventDefault) e.preventDefault();
+    handleFormSubmit(e);
+    return false;
+}

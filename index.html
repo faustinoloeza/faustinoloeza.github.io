@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Faustino Loeza</title>
-      <meta name="author" content="name">
+      <meta name="author" content="faustinoloeza">
       <meta name="description" content="my personal blog">
       <meta name="keywords" content="keywords,here">
       <link href="tailwind.min.css" rel="stylesheet" />
@@ -80,11 +80,13 @@ page: <span id="page"></span>
                <h2 class="font-bold break-normal text-2xl md:text-4xl">Contactar</h2>
                <h3 class="font-bold break-normal font-normal text-gray-600 text-base md:text-xl">Escribeme =D</h3>
                <div class="w-full text-center pt-4">
-                  <form id="formulario" method="POST" data-email="example@email.net" action="https://script.google.com/macros/s/AKfycbx7BkGscbaVD26CXA7O3MNYJ5k-8idcmpCU3x2rvw/exec">
+                  <form id="formulario" method="POST" data-email="example@email.net" action="https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec">
                      <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
                         <input id="name" name="name" type="text" placeholder="nombre" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
                         <input id="message" name="message" type="text" placeholder="tu mensaje" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
                         <input id="email" name="email" type="email" placeholder="tu email" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
+                        <input id="color" name="color" type="text" placeholder="tu color" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
+                         <input id="algo" name="algo" type="text" placeholder="tu algo" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
                         <button type="submit" class="flex-1 mt-4 md:mt-0 block md:inline-block appearance-none bg-teal-500 text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-teal-400">Enviar</button>
                      </div>
                   </form>
@@ -126,118 +128,12 @@ page: <span id="page"></span>
               })
               .resolve();
 
-
-              loaded();
+              loadEventListenerToForm();
            });
 
 
 
-  // get all data in form and return object
-  function getFormData(form) {
-    var elements = form.elements;
-    var honeypot;
 
-    var fields = Object.keys(elements).filter(function(k) {
-      if (elements[k].name === "honeypot") {
-        honeypot = elements[k].value;
-        return false;
-      }
-      return true;
-    }).map(function(k) {
-      if(elements[k].name !== undefined) {
-        return elements[k].name;
-      // special case for Edge's html collection
-      }else if(elements[k].length > 0){
-        return elements[k].item(0).name;
-      }
-    }).filter(function(item, pos, self) {
-      return self.indexOf(item) == pos && item;
-    });
-
-    var formData = {};
-    fields.forEach(function(name){
-      var element = elements[name];
-      
-      // singular form elements just have one value
-      formData[name] = element.value;
-
-      // when our element has multiple items, get their values
-      if (element.length) {
-        var data = [];
-        for (var i = 0; i < element.length; i++) {
-          var item = element.item(i);
-          if (item.checked || item.selected) {
-            data.push(item.value);
-          }
-        }
-        formData[name] = data.join(', ');
-      }
-    });
-
-    // add form-specific values into the data
-    formData.formDataNameOrder = JSON.stringify(fields);
-    formData.formGoogleSheetName = form.dataset.sheet || "responses"; // default sheet name
-    formData.formGoogleSendEmail
-      = form.dataset.email || ""; // no email by default
-
-    return {data: formData, honeypot: honeypot};
-  }
-
-  function handleFormSubmit(event) {  // handles form submit without any jquery
-    event.preventDefault();           // we are submitting via xhr below
-    var form = event.target;
-    var formData = getFormData(form);
-    var data = formData.data;
-
-    // If a honeypot field is filled, assume it was done so by a spam bot.
-    if (formData.honeypot) {
-      return false;
-    }
-
-    //disableAllButtons(form);
-    var url = form.action;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    // xhr.withCredentials = true;
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          form.reset();
-          alert("Mensaje enviado");
-        }
-    };
-    // url encode form data for sending as post data
-    var encoded = Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-    }).join('&');
-    xhr.send(encoded);
-  }
-  
-  function loaded() {
-    var form = document.getElementById('formulario');
-if (form.attachEvent) {
-    form.attachEvent("submit", processForm);
-} else {
-    form.addEventListener("submit", processForm);
-}
-  }
-  
-
-  function disableAllButtons(form) {
-    var buttons = form.querySelectorAll("button");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].disabled = true;
-    }
-  }
-
-function processForm(e) {
-    if (e.preventDefault) e.preventDefault();
-    handleFormSubmit(e);
-    /* do what you want with the form */
-
-    // You must return false to prevent the default form behavior
-    return false;
-}
 
       </script>
    </body>
