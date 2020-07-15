@@ -1,0 +1,116 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="github-markdown.css">
+<link rel="stylesheet" type="text/css" href="https://github.githubassets.com/assets/gist-embed-52b3348036dbd45f4ab76e44de42ebc4.css">
+<style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
+
+<article class="markdown-body">
+
+    <div id="main">
+        
+    </div>
+
+</article>
+
+
+
+ <script>
+    test();
+
+    function loadDoc() {
+
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+
+       }
+     };
+
+   xhttp.open("GET", "https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json", true);
+   xhttp.send();
+}
+
+    function createElement(dato){
+
+     function getCode(id, url) {
+    fetch(url)
+        .then(function(response) {
+            var miDiv = document.getElementById("main");
+            miDiv.innerHTML = response.div;
+        });
+}
+
+        template = "";
+        if (dato.etiqueta == "titulo") {
+            template += "<h1>"+ dato.descripcion +"</h1>"
+        }
+
+        if (dato.etiqueta == "subtitulo") {
+            template += "<h3>"+ dato.descripcion +"</h3>"
+        }
+
+        if (dato.etiqueta == "parrafo") {
+            template += "<p>"+ dato.descripcion +"</p>"
+        }
+
+        if (dato.etiqueta == "imagen") {
+            template += "<img src="+dato.descripcion+">";
+        }
+
+        if (dato.etiqueta == "codigo") {
+            template += "<pre><code>"+ dato.descripcion +"</code></pre>"
+        }
+        if (dato.etiqueta == "gist") {
+
+            template += "<div id="+dato.id+"></div>";
+            setTimeout(getCode(dato.id, dato.descripcion), 5000);
+        }
+
+        return template;
+
+    }
+
+    function makeFormat(datos){
+
+        var miDiv = document.getElementById("main");
+        var template = "";
+        for (var i = 0; i < datos.length; i++) {
+            template += createElement(datos[i]);
+        }
+
+        miDiv.innerHTML = template;
+    }
+        //https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
+     function test() {
+    fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja=info')
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+           makeFormat(data);
+        });
+}
+
+
+     function getCode() {
+    fetch('https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json')
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+          return data;
+        });
+}
+ </script>
