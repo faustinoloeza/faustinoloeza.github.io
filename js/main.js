@@ -646,3 +646,7 @@ function processForm(e) {
 
 
 
+    function changeLanguage(idioma){
+        test('introduccion_'+ idioma, "main");
+        test('variables_'+ idioma, "variables");
+    }
