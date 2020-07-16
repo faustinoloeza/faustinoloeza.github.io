@@ -21,8 +21,13 @@
 
 
  <script>
-    test('introduccion', "main");
-    test('variables', "variables");
+ 	var idioma = navigator.language || navigator.userLanguage;
+ 	if (idioma != 'es') {
+ 		idioma = 'en'
+ 	}
+
+    test('introduccion_'+ idioma, "main");
+    test('variables_'+ idioma, "variables");
 
 
 
