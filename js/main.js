@@ -601,9 +601,9 @@ function processForm(e) {
 
 
 
-    function makeFormat(datos){
+    function makeFormat(datos, div){
 
-        var miDiv = document.getElementById("main");
+        var miDiv = document.getElementById(div);
         var template = "";
         for (var i = 0; i < datos.length; i++) {
             template += createElement(datos[i]);
@@ -612,10 +612,10 @@ function processForm(e) {
         miDiv.innerHTML = template;
     }
         //https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
-     function test(hoja) {
+     function test(hoja, idDiv) {
 
 
-        var div = document.getElementById("main");
+        var div = document.getElementById(idDiv);
         var uno = '<div class="FB-Loading-Card"><div><div></div><div></div><div></div></div><div></div><div></div><div></div></div>';
         div.innerHTML = uno+'</br></br></br>'+ uno+'</br></br></br>'+ uno+'</br></br></br>' + uno+'</br></br></br>';
 
@@ -623,11 +623,12 @@ function processForm(e) {
         .then(function(response) {
             return response.json();
         }).then(function(data) {
-           makeFormat(data);
+
+           makeFormat(data, idDiv);
 
            document.querySelectorAll('pre code').forEach((block) => {
-    hljs.highlightBlock(block);
-  });
+                hljs.highlightBlock(block);
+            });
         });
 
 
