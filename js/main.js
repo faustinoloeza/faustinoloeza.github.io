@@ -538,3 +538,102 @@ function processForm(e) {
     handleFormSubmit(e);
     return false;
 }
+
+  function loadDoc() {
+
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+
+       }
+     };
+
+   xhttp.open("GET", "https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json", true);
+   xhttp.send();
+}
+
+    
+    function crearCodigoEnDiv(div, js){
+
+    }
+
+
+    function createElement(dato){
+
+
+        template = "";
+        if (dato.etiqueta == "titulo") {
+            template += "<h1>"+ dato.descripcion +"</h1>"
+        }
+
+        if (dato.etiqueta == "subtitulo") {
+            template += "<h3>"+ dato.descripcion +"</h3>"
+        }
+
+        if (dato.etiqueta == "parrafo") {
+            template += "<p>"+ dato.descripcion +"</p>"
+        }
+
+        if (dato.etiqueta == "imagen") {
+            template += "<img src="+dato.descripcion+">";
+        }
+
+        if (dato.etiqueta == "codigo") {
+
+            template += "<pre><code class='language-dart'>"+ dato.descripcion +"</code></pre>";
+            //template += '<html><body onload="parent.ajustarFrame2(document.body.scrollHeight )"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript></body></html>';
+
+            //template += "<div id='123456'>"+ '<scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript>' +"</div>";
+            //template += "<div id="+dato.id+"></div>"
+
+            //template += ""
+        }
+        if (dato.etiqueta == "gist") {
+
+            template += "<div id="+dato.id+"></div>";
+            
+        }
+
+        return template;
+
+    }
+
+
+
+    function makeFormat(datos){
+
+        var miDiv = document.getElementById("main");
+        var template = "";
+        for (var i = 0; i < datos.length; i++) {
+            template += createElement(datos[i]);
+        }
+
+        miDiv.innerHTML = template;
+    }
+        //https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
+     function test(hoja) {
+    fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja='+ hoja)
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+           makeFormat(data);
+
+           document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+        });
+}
+
+
+     function getCode() {
+    fetch('https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json')
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+          return data;
+        });
+}
+
+
+
