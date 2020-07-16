@@ -11,12 +11,10 @@
 
 <article class="markdown-body">
 
-<table>
-	<td onclick=" changeLanguage('es');">
-		ES
-	</td>
-	<td onclick=" changeLanguage('en');">EN</td>
-</table>
+
+	<button onclick=" changeLanguage('es');">ES</button> 
+	<button onclick=" changeLanguage('en');">EN</button> 
+
     <div id="main"></div>
     <div id="variables"></div>
 
@@ -27,19 +25,8 @@
 
 
  <script>
- 	var idioma = navigator.language || navigator.userLanguage;
- 	if (idioma.length > 2) {
- 		var idioma = idioma.split("-")[0];
- 	}
 
-
- 	if (idioma != 'es') {
- 		idioma = 'en';
- 	}
-
-    changeLanguage(idioma);
-
-
+    changeLanguage('es');
 
 
 
