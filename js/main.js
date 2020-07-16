@@ -613,7 +613,13 @@ function processForm(e) {
     }
         //https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
      function test(hoja) {
-    fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja='+ hoja)
+
+
+        var div = document.getElementById("main");
+        var uno = '<div class="FB-Loading-Card"><div><div></div><div></div><div></div></div><div></div><div></div><div></div></div>';
+        div.innerHTML = uno+'</br></br></br>'+ uno+'</br></br></br>'+ uno+'</br></br></br>' + uno+'</br></br></br>';
+
+            fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja='+ hoja)
         .then(function(response) {
             return response.json();
         }).then(function(data) {
@@ -623,6 +629,8 @@ function processForm(e) {
     hljs.highlightBlock(block);
   });
         });
+
+
 }
 
 
