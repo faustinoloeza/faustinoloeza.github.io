@@ -4,18 +4,7 @@
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/atom-one-dark.min.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Rowdies&display=swap" rel="stylesheet">
-<style type="text/css">
-	p, ul, li{
-		font-family: 'Zilla Slab', serif;
-		font-size: 18px;
-	}
-	h1, h2, h3, h4, h5, h6{
-		font-family: 'Rowdies', cursive;
-	}
 
-</style>
 <body style="background: #6efff2;">
 	
 
@@ -27,7 +16,6 @@
 	<button onclick=" changeLanguage('en');">EN</button> 
 
     <div id="main"></div>
-    <div id="variables"></div>
 
 </article>
 
@@ -36,8 +24,22 @@
 
 
  <script>
+   function toSubmit(){
 
-    changeLanguage('es');
+
+  
+            fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja=django')
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+        	console.table(data);
+           //makeFormat(data, idDiv);
+
+        });
+      return false;
+   }
+    //changeLanguage('es');
+    changeLanguageFull('es', 'users', 'main');
 
 
 

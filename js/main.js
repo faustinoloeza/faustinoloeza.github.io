@@ -254,7 +254,7 @@ function replaceIframeContent() {
     iframeElement.contentWindow.document.close();
 }
 
-function test() {
+/*function test() {
     fetch('https://api.github.com/repos/agalea91/crypto-monetary-base/contents/charts/relative_coin_supply_pct_estimates.html')
         .then(function(response) {
             return response.json();
@@ -263,7 +263,7 @@ function test() {
             iframe.src = 'data:text/html;base64,' + encodeURIComponent(data['content']);
         });
 }
-
+*/
 
 var current_page = 1;
 var records_per_page = 6;
@@ -489,31 +489,53 @@ function handleFormSubmit(event) {
     var form = event.target;
     var formData = getFormData(form);
     var data = formData.data;
-
+    Swal.fire(
+        'Validando datos',
+        'Por favor espera un momento',
+        'info'
+    );
     console.log(data);
     // If a honeypot field is filled, assume it was done so by a spam bot.
     if (formData.honeypot) {
         return false;
     }
 
-    //disableAllButtons(form);
-    var url = form.action;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    // xhr.withCredentials = true;
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            form.reset();
-            alert("Mensaje enviado");
-        }
-    };
-    // url encode form data for sending as post data
-    var encoded = Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-    }).join('&');
+    var emailValidate = validateEmail(data.email);
+    var validateNombre = valideteString(data.nombre.length, 5);
+    var validateMensaje = valideteString(data.mensaje.length, 10);
 
-    xhr.send(encoded);
+    if (emailValidate.estatus && validateNombre.estatus && validateMensaje.estatus) {
+        //disableAllButtons(form);
+        var url = form.action;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        //xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                form.reset();
+                Swal.fire(
+                    'Email Enviado',
+                    'Mensaje enviado correctamente.',
+                    'success'
+                );
+            }
+        };
+        // url encode form data for sending as post data
+        var encoded = Object.keys(data).map(function(k) {
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        }).join('&');
+
+        xhr.send(encoded);
+    } else {
+        Swal.fire(
+            'Email no enviado',
+            'Por favor verifica los datos.',
+            'info'
+        );
+    }
+
+
 }
 
 function loadEventListenerToForm() {
@@ -539,94 +561,97 @@ function processForm(e) {
     return false;
 }
 
-  function loadDoc() {
+function loadDoc() {
 
-   var xhttp = new XMLHttpRequest();
-   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("demo").innerHTML = this.responseText;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //document.getElementById("demo").innerHTML = this.responseText;
 
-       }
-     };
+        }
+    };
 
-   xhttp.open("GET", "https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json", true);
-   xhttp.send();
+    xhttp.open("GET", "https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json", true);
+    xhttp.send();
 }
 
-    
-    function crearCodigoEnDiv(div, js){
+
+function crearCodigoEnDiv(div, js) {
+
+}
+
+
+function createElement(dato) {
+
+
+    template = "";
+
+    if (dato.etiqueta == "titulo") {
+        template += "<h1>" + dato.descripcion + "</h1>"
+    }
+
+    if (dato.etiqueta == "subtitulo") {
+        template += "<h3>" + dato.descripcion + "</h3>"
+    }
+
+    if (dato.etiqueta == "parrafo") {
+        template += "<p>" + dato.descripcion + "</p>"
+    }
+
+    if (dato.etiqueta == "imagen") {
+        template += "<img src=" + dato.descripcion + ">";
+    }
+
+    if (dato.etiqueta == "codigo") {
+
+        template += "<pre><code class='language-dart'>" + dato.descripcion + "</code></pre>";
+        //template += '<html><body onload="parent.ajustarFrame2(document.body.scrollHeight )"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript></body></html>';
+
+        //template += "<div id='123456'>"+ '<scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript>' +"</div>";
+        //template += "<div id="+dato.id+"></div>"
+
+        //template += ""
+    }
+    if (dato.etiqueta == "gist") {
+
+        template += "<div id=" + dato.id + "></div>";
 
     }
 
+    return template;
 
-    function createElement(dato){
+}
 
 
-        template = "";
-        if (dato.etiqueta == "titulo") {
-            template += "<h1>"+ dato.descripcion +"</h1>"
-        }
 
-        if (dato.etiqueta == "subtitulo") {
-            template += "<h3>"+ dato.descripcion +"</h3>"
-        }
+function makeFormat(datos, div) {
 
-        if (dato.etiqueta == "parrafo") {
-            template += "<p>"+ dato.descripcion +"</p>"
-        }
-
-        if (dato.etiqueta == "imagen") {
-            template += "<img src="+dato.descripcion+">";
-        }
-
-        if (dato.etiqueta == "codigo") {
-
-            template += "<pre><code class='language-dart'>"+ dato.descripcion +"</code></pre>";
-            //template += '<html><body onload="parent.ajustarFrame2(document.body.scrollHeight )"><scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript></body></html>';
-
-            //template += "<div id='123456'>"+ '<scr' + 'ipt type="text/javascript" src="https://gist.github.com/' + 'f406bd055db50f8b225197b05684c84c' + '.js"> </sc' + 'ript>' +"</div>";
-            //template += "<div id="+dato.id+"></div>"
-
-            //template += ""
-        }
-        if (dato.etiqueta == "gist") {
-
-            template += "<div id="+dato.id+"></div>";
-            
-        }
-
-        return template;
-
+    var miDiv = document.getElementById(div);
+    var template = "";
+    for (var i = 0; i < datos.length; i++) {
+        template += createElement(datos[i]);
     }
 
+    miDiv.innerHTML = template;
+}
+//https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
+function test(hoja, idDiv) {
 
 
-    function makeFormat(datos, div){
+    var div = document.getElementById(idDiv);
 
-        var miDiv = document.getElementById(div);
-        var template = "";
-        for (var i = 0; i < datos.length; i++) {
-            template += createElement(datos[i]);
-        }
-
-        miDiv.innerHTML = template;
-    }
-        //https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec
-     function test(hoja, idDiv) {
+    var uno = '<div class="FB-Loading-Card"><div><div></div><div></div><div></div></div><div></div><div></div><div></div></div>';
+    div.innerHTML = uno + '</br></br></br>' + uno + '</br></br></br>' + uno + '</br></br></br>' + uno + '</br></br></br>';
 
 
-        var div = document.getElementById(idDiv);
-        var uno = '<div class="FB-Loading-Card"><div><div></div><div></div><div></div></div><div></div><div></div><div></div></div>';
-        div.innerHTML = uno+'</br></br></br>'+ uno+'</br></br></br>'+ uno+'</br></br></br>' + uno+'</br></br></br>';
-
-            fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja='+ hoja)
+    fetch('https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec?hoja=' + hoja)
         .then(function(response) {
             return response.json();
         }).then(function(data) {
 
-           makeFormat(data, idDiv);
+            makeFormat(data, idDiv);
 
-           document.querySelectorAll('pre code').forEach((block) => {
+            document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightBlock(block);
             });
         });
@@ -635,18 +660,132 @@ function processForm(e) {
 }
 
 
-     function getCode() {
+function getCode() {
     fetch('https://gist.github.com/faustinoloeza/f406bd055db50f8b225197b05684c84c.json')
         .then(function(response) {
             return response.json();
         }).then(function(data) {
-          return data;
+            return data;
         });
 }
 
 
 
-    function changeLanguage(idioma){
-        test('introduccion_'+ idioma, "main");
-        test('variables_'+ idioma, "variables");
+function changeLanguage(idioma) {
+    test('introduccion_' + idioma, "main");
+    //test('variables_'+ idioma, "variables");
+}
+
+
+function changeLanguageFull(idioma, documento, divID) {
+    test(documento + '_' + idioma, divID);
+}
+
+function sendEmail() {
+    event.preventDefault(); //
+    //method="POST" data-email="example@email.net" action="https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec"
+    //makeFormat(data, idDiv);
+
+    var nombre = document.getElementById("nombre");
+    var mensaje = document.getElementById("mensaje");
+    var email = document.getElementById("email");
+
+
+    var cleanNombre = nombre.value.replace(/[|&;$%@"<>()+,]/g, "");
+    var cleanMensaje = mensaje.value.replace(/[|&;$%@"<>()+,]/g, "");
+    var emailValidate = validateEmail(email.value);
+    var validateNombre = valideteString(cleanNombre.length, 5);
+    var validateMensaje = valideteString(cleanMensaje.length, 10);
+
+
+    if (emailValidate.estatus && validateNombre && validateMensaje) {
+        var data = {
+            nombre: cleanNombre,
+            email: email.value,
+            mensaje: cleanMensaje
+        };
+        nombre.value = "";
+        mensaje.value = "";
+        email.value = "";
+        sendDataAjax(data);
+    } else {
+        //var mensaje = mensajeValidacion(emailValidate, validateNombre, validateMensaje);
+        Swal.fire(
+            'Datos Incompletos',
+            'Por favor verifica los datos.',
+            'info'
+        );
     }
+
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    respuesta = re.test(String(email).toLowerCase());
+    if (respuesta) {
+        return {
+            estatus: true
+        };
+    } else {
+        return {
+            estatus: false,
+            mensaje: "email"
+        };
+    }
+}
+
+function valideteString(mensaje, tamanio) {
+    if (mensaje >= tamanio) {
+        return {
+            estatus: true
+        };
+    } else {
+        return {
+            estatus: false,
+            mensaje: "mensaje"
+        };
+    }
+}
+
+
+function sendDataAjax(data) {
+    var url = "https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec";
+    var request = new XMLHttpRequest();
+
+    request.open('POST', url, true);
+
+    request.onload = function() {
+        if (this.status >= 200 && this.status < 400) {
+            // Success!
+            var resp = this.reresponse;
+            var resp = JSON.parse(resp);
+
+            if (resp.result === "success") {
+                Swal.fire(
+                    'Email Enviado',
+                    'Mensaje enviado correctamente.' + this.response,
+                    'success'
+                );
+            } else {
+                Swal.fire(
+                    'Email no enviado',
+                    'Mensaje no recibido.' + this.response,
+                    'error'
+                );
+            }
+
+
+        } else {
+            // We reached our target server, but it returned an error
+
+        }
+    };
+
+    request.onerror = function() {
+        // There was a connection error of some sort
+    };
+
+    var myData = JSON.stringify(data);
+    console.log(myData);
+    request.send(myData);
+}

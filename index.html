@@ -19,7 +19,7 @@
             <p class="text-white font-extrabold text-3xl md:text-5xl">
                 Faustino Loeza
             </p>
-            <p class="text-xl md:text-2xl text-gray-500">Welcome to my Blog</p>
+            <p class="text-xl md:text-2xl text-gray-500">Welcome to my Blog, En construcción...</p>
          </div>
       </div>
       <!--Container-->
@@ -65,6 +65,8 @@
 <a href="javascript:nextPage()" id="btn_next">Next</a>
 page: <span id="page"></span>
 <body>
+
+
                <div class="flex flex-wrap justify-between" id="posts">
 
 
@@ -80,14 +82,11 @@ page: <span id="page"></span>
                <h2 class="font-bold break-normal text-2xl md:text-4xl">Contactar</h2>
                <h3 class="font-bold break-normal font-normal text-gray-600 text-base md:text-xl">Escribeme =D</h3>
                <div class="w-full text-center pt-4">
-                  <form id="formulario" method="POST" data-email="example@email.net" action="https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec">
+                  <form id="formulario" method="POST" action="https://script.google.com/macros/s/AKfycbwphEYZoPrjXv52cGoFkf45YV4vayyNlEazKZrXRe_cAPK10HOH/exec">
                      <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                        <input id="name" name="name" type="text" placeholder="nombre" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
-                        <input id="message" name="message" type="text" placeholder="tu mensaje" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
+                        <input id="nombre" name="nombre" type="text" placeholder="Ingresa tu nombre" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
+                        <input id="mensaje" name="mensaje" type="textarea" placeholder="tu mensaje, minimo 10 caracteres" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
                         <input id="email" name="email" type="email" placeholder="tu email" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
-                        <input id="color" name="color" type="text" placeholder="tu color" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
-                         <input id="algo" name="algo" type="text" placeholder="tu algo" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
-                          <input id="gato" name="gato" type="text" placeholder="tu gato" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
                         <button type="submit" class="flex-1 mt-4 md:mt-0 block md:inline-block appearance-none bg-teal-500 text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-teal-400">Enviar</button>
                      </div>
                   </form>
@@ -107,7 +106,7 @@ page: <span id="page"></span>
       <script type="text/javascript" src="js/navigo.min.js"></script>
       <script type="text/javascript" src="db.js"></script>
       <script type="text/javascript" src="js/main.js"></script>
-
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
       <script type="text/javascript">
          
 

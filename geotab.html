@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Integration Example</title>
+    <link rel="stylesheet" href="integrationExample.css" />
+    <script>
+        geotab.addin.integrationExample = function(api, state) {
+            var center = document.getElementById("center"),
+                listCreator = function(entities) {
+                    var listElement = document.createElement("UL");
+                    listElement.appendChild(entities.reduce(function(frag, entity) {
+                        var element = document.createElement("LI");
+                        element.textContent = entity.name;
+                        element.setAttribute("data-id", entity.id);
+                        frag.appendChild(element);
+                        return frag;
+                    }, document.createDocumentFragment()));
+                    return listElement;
+                },
+                goToVehicles = function(event) {
+                    var id = event.target.getAttribute("data-id");
+                    if (id) {
+                        state.gotoPage("device", {
+                            id: id
+                        });
+                    }
+                },
+                refreshPage = function() {
+                    api.call("Get", {
+                        typeName: "Device"
+                    }, function(result) {
+                        center.addEventListener("click", goToVehicles, false);
+                        center.appendChild(listCreator(result));
+                    }, function(error) {
+                        console.log(error.message);
+                    });
+                },
+                clearOnLeaving = function() {
+                    center.removeEventListener("click", goToVehicles, false);
+                    center.innerHTML = "";
+                };
+
+            return {
+                initialize: (api, state, callback) {
+                    document.getElementById("vehiclesButton")
+                        .addEventListener("click", function() {
+                            state.gotoPage("devices");
+                        }, false);
+                    callback();
+                },
+                focus: function(api, state) {
+                    refreshPage();
+                },
+                blur: function(api, state) {
+                    clearOnLeaving();
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="center">
+        <button id="vehiclesButton">Go to vehicles page</button>
+    </div>
+</body>
+</html>
