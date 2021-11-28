@@ -25,7 +25,6 @@ function handleFormSubmit(event) {
         'Please wait a moment',
         'info'
     );
-    console.log(data);
     // If a honeypot field is filled, assume it was done so by a spam bot.
     if (formData.honeypot) {
         return false;
