@@ -160,3 +160,55 @@ function toggleNavbar(collapseID) {
     document.getElementById(collapseID).classList.toggle("hidden");
     document.getElementById(collapseID).classList.toggle("block");
 }
+
+async function fetchPosts() {
+    try {
+        const response = await fetch('https://dummyjson.com/posts');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.posts; // Devolvemos solo el array de posts
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+function createPostCard(post) {
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'w-full md:w-4/12 px-4 text-center mb-8';
+
+    const card = document.createElement('div');
+    card.className = 'relative flex flex-col min-w-0 break-words bg-white w-full shadow-lg rounded-lg';
+
+    const cardBody = document.createElement('div');
+    cardBody.className = 'px-4 py-5 flex-auto';
+
+    const title = document.createElement('h6');
+    title.className = 'text-xl font-semibold';
+    title.textContent = post.title;
+
+    const description = document.createElement('p');
+    description.className = 'mt-2 mb-4 text-gray-600';
+    description.textContent = post.body;
+
+    cardBody.appendChild(title);
+    cardBody.appendChild(description);
+    card.appendChild(cardBody);
+    cardContainer.appendChild(card);
+
+    return cardContainer;
+}
+
+async function renderPosts() {
+    const posts = await fetchPosts();
+    if (!posts) return; // Si no hay posts, salimos de la función
+
+    const container = document.getElementById('miContenido');
+    container.innerHTML = ''; // Limpiar el contenido existente
+
+    posts.forEach(post => {
+        const card = createPostCard(post);
+        container.appendChild(card);
+    });
+}
