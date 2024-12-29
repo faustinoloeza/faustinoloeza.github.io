@@ -163,7 +163,7 @@ function toggleNavbar(collapseID) {
 
 async function fetchPosts() {
     try {
-        const response = await fetch('https://dummyjson.com/posts');
+        const response = await fetch('https://raw.githubusercontent.com/LearnWebCode/json-example/refs/heads/master/posts.json');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -190,7 +190,7 @@ function createPostCard(post) {
 
     const description = document.createElement('p');
     description.className = 'mt-2 mb-4 text-gray-600';
-    description.textContent = post.body;
+    description.textContent = post.content;
 
     cardBody.appendChild(title);
     cardBody.appendChild(description);
